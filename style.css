@@ -1,0 +1,139 @@
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-image: url('assets/Background.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center 19%;
+  scrollbar-width: none;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  gap: 10px;
+  text-align: center;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+h1 img {
+    max-width: 240px;
+    height: auto;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#figma-frame {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  overflow: hidden;
+  border: 5px solid yellow;
+  z-index: 10;
+}
+
+button {
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 280px;
+  width: 100px;
+  height: 39px;
+  background-image: url('assets/Button.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border: none;
+}
+
+.download-container {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+}
+
+.download-button {
+    background: none;
+    top: 10px;
+    left: 180px;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: aliceblue;
+}
+
+@media screen and (max-width: 768px) {
+  #figma-frame {
+    width: 90%;
+    height: 300px;
+  }
+}
+
+#camera {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+#previewContainer {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 55%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+#camera {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#countdown {
+  position: absolute;
+  top: 350px;
+  left: 180px;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  color: whitesmoke;
+  font-family: "Public Sans", sans-serif;
+  font-optical-sizing: auto;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+img {
+  width: auto;
+  height: auto;
+  image-rendering: crisp-edges;
+}
+
+/* #watermark{
+    margin: auto;
+    top : 5px;
+    left : 25%;
+    display:block;
+    position : absolute;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+} */

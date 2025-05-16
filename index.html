@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pizza Photobooth</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <h1>
+    <img src="assets/Say Cheeze.png" alt="Logo" />
+  </h1>
+
+  <div class="container">
+    <div id="figma-frame">
+      <video id="camera" autoplay playsinline></video>
+    </div>
+
+    <canvas id="canvas" width="480" height="640" style="display:none;"></canvas>
+    <div id="previewContainer"></div>
+    <button id="snap" class="normal-button"></button>
+    <div id="countdown" style="display:none;"></div>
+  </div>
+
+  <div id="downloadContainer" class="download-container" style="display: none;">
+    <a id="downloadButton" class="download-button" href="#" download="Sweet Happiness Pizzaland.png">
+      <button class="download-button"><h3>Download</h3></button>
+    </a>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
