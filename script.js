@@ -4,6 +4,7 @@ const previewContainer = document.getElementById('previewContainer');
 const downloadButton = document.getElementById('downloadButton');
 const canvas = document.createElement('canvas');
 const context = canvas.getContext('2d');
+const backButton = document.getElementById('backButton');
 
 const photoList = [];
 let finalCanvas;
@@ -42,7 +43,12 @@ function capturePhoto() {
   canvas.height = cropHeight;
   context.drawImage(video, sx, sy, sw, sh, 0, 0, cropWidth, cropHeight);
 
-  photoList.push(canvas);
+  const copiedCanvas = document.createElement('canvas');
+  copiedCanvas.width = canvas.width;
+  copiedCanvas.height = canvas.height;
+  copiedCanvas.getContext('2d').drawImage(canvas, 0, 0);
+  photoList.push(copiedCanvas);
+
 
   if (photoList.length === 2) {
     combinePhotos();
@@ -56,8 +62,8 @@ function capturePhoto() {
 
 function combinePhotos() {
   finalCanvas = document.createElement('canvas');
-  finalCanvas.width = 1000;
-  finalCanvas.height = 2120;
+  finalCanvas.width = 1100;
+  finalCanvas.height = 2260;
   const ctx = finalCanvas.getContext('2d');
 
   ctx.imageSmoothingEnabled = true;
@@ -67,7 +73,7 @@ function combinePhotos() {
   ctx.drawImage(photoList[1], 32, 920, 980, 900);
 
   const frameImage = new Image();
-  frameImage.src = 'assets/FrameOne.png';
+  frameImage.src = 'assets/Frame 17.png';
   frameImage.onload = () => {
     ctx.shadowColor = 'rgba(0, 0, 0, 0.5)'; 
     ctx.shadowBlur = 50;                  
@@ -86,17 +92,47 @@ function combinePhotos() {
 }
 
 function showPreviewInPage() {
-  const imageData = finalCanvas.toDataURL('image/png');
-  
-  previewContainer.innerHTML = `<img src="${imageData}" alt="Hasil Foto" style="max-width: 100%; border-radius: 8px;" />`;
+  const doubleCanvas = document.createElement('canvas');
+  doubleCanvas.width = finalCanvas.width * 2;
+  doubleCanvas.height = finalCanvas.height;
 
+  const ctx = doubleCanvas.getContext('2d');
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+
+  ctx.drawImage(finalCanvas, 0, 0); 
+  ctx.drawImage(finalCanvas, finalCanvas.width, 0);
+
+  const imageData = doubleCanvas.toDataURL('image/png');
+  const previewSection = document.getElementById('previewSection');
+  const previewImageContainer = document.getElementById('previewImageContainer');
+  const now = new Date();
+  const timestamp = now.toISOString().replace(/T/, '_').replace(/:/g, '-').split('.')[0];
+  const filename = `Sweet Happiness Pizzaland_${timestamp}.png`;
   const downloadButton = document.getElementById('downloadButton');
   const downloadContainer = document.getElementById('downloadContainer');
 
-  downloadButton.setAttribute('href', imageData);
-  downloadButton.setAttribute('download', 'Sweet Happiness Pizzaland.png');
-  downloadContainer.style.display = 'block';
+  previewImageContainer.innerHTML = `<img src="${imageData}" alt="Hasil Foto" style="max-width: 100%; border-radius: 8px;" />`;
+
+  downloadButton.href = imageData;
+  downloadButton.download = filename;
+
+  previewSection.style.display = 'flex';
+  downloadContainer.style.display = 'flex';
 }
+
+backButton.addEventListener('click', () => {
+  document.getElementById('previewSection').style.display = 'none';
+  document.getElementById('downloadContainer').style.display = 'none';
+
+  document.getElementById('figma-frame').style.display = 'block';
+  document.getElementById('camera').style.display = 'block';
+  document.getElementById('snap').style.display = 'inline-block';
+
+  document.getElementById('previewContainer').innerHTML = '';
+
+  photoList.length = 0;
+});
 
 function startCountdownAndCapture() {
   let counter = 3;
