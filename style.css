@@ -99,18 +99,16 @@ img {
   padding: 20px;
   border-radius: 12px;
 }
-
-.nayrakuen {
-  margin-top: 80px;
-  display: flex;
-  justify-content: center;
-}
-
-.nayrakuen img {
+.sticky-logo {
   width: 70px;
-  opacity: 0.9;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999;
   pointer-events: none;
   user-select: none;
+  opacity: 0.9;
 }
 
 

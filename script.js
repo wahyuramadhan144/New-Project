@@ -121,6 +121,10 @@ function showPreviewInPage() {
 
   previewSection.style.display = 'flex';
   downloadContainer.style.display = 'flex';
+
+      if (stickyLogo) {
+    stickyLogo.style.display = 'none';
+  }
 }
 
 backButton.addEventListener('click', () => {
@@ -134,6 +138,10 @@ backButton.addEventListener('click', () => {
   document.getElementById('previewContainer').innerHTML = '';
 
   photoList.length = 0;
+
+      if (stickyLogo) {
+    stickyLogo.style.display = 'block';
+  }
 });
 
 function startCountdownAndCapture() {
