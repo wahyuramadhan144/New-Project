@@ -89,7 +89,7 @@ img {
 }
 
 .preview-section {
-  width: 55%;
+  width: 70%;
   max-width: 480px;
   margin: 90px auto 0;
   display: flex;
@@ -107,15 +107,14 @@ img {
 
 .preview-image {
   width: 100%;
+  overflow-x: auto;
   display: flex;
   justify-content: center;
 }
 
 .preview-image img {
-  width: 100%;
   max-width: 100%;
   height: auto;
-  border-radius: 8px;
 }
 
 .download-container {
