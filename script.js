@@ -5,6 +5,7 @@ const downloadButton = document.getElementById('downloadButton');
 const canvas = document.createElement('canvas');
 const context = canvas.getContext('2d');
 const backButton = document.getElementById('backButton');
+const stickyLogo = document.querySelector('.sticky-logo');
 
 const photoList = [];
 let finalCanvas;
@@ -49,82 +50,88 @@ function capturePhoto() {
   copiedCanvas.getContext('2d').drawImage(canvas, 0, 0);
   photoList.push(copiedCanvas);
 
-
-  if (photoList.length === 2) {
+  if (photoList.length === 4) {
     combinePhotos();
     video.style.display = 'none';
     document.getElementById('figma-frame').style.display = 'none';
     snapButton.style.display = 'none';
   } else {
-    alert('Foto pertama diambil, ambil satu lagi.');
+    const next = photoList.length + 1;
+    showToast(`Foto ${photoList.length} berhasil diambil! Bersiap untuk foto ${next}...`);
+    setTimeout(startCountdownAndCapture, 1500);
   }
 }
 
 function combinePhotos() {
+  Promise.all([
+    loadImage('assets/Frame 17.png'),
+    loadImage('assets/Frame 18.png')
+  ]).then(([frame1, frame2]) => {
+    const singleWidth = 1100;
+    const singleHeight = 2260;
+
+    const canvas1 = document.createElement('canvas');
+    canvas1.width = singleWidth;
+    canvas1.height = singleHeight;
+    const ctx1 = canvas1.getContext('2d');
+    ctx1.drawImage(photoList[0], 32, 40, 980, 900);
+    ctx1.drawImage(photoList[1], 32, 920, 980, 900);
+    ctx1.drawImage(frame1, 0, 0, singleWidth, singleHeight);
+
+    const canvas2 = document.createElement('canvas');
+    canvas2.width = singleWidth;
+    canvas2.height = singleHeight;
+    const ctx2 = canvas2.getContext('2d');
+    ctx2.drawImage(photoList[2], 32, 40, 980, 900);
+    ctx2.drawImage(photoList[3], 32, 920, 980, 900);
+    ctx2.drawImage(frame2, 0, 0, singleWidth, singleHeight);
+
+const cropBottom = 100;
+const cropRight = 40;
+
   finalCanvas = document.createElement('canvas');
-  finalCanvas.width = 1100;
-  finalCanvas.height = 2260;
-  const ctx = finalCanvas.getContext('2d');
+  finalCanvas.width = (singleWidth * 2) - cropRight;
+  finalCanvas.height = singleHeight - cropBottom;
+  const finalCtx = finalCanvas.getContext('2d');
 
-  ctx.imageSmoothingEnabled = true;
-  ctx.imageSmoothingQuality = 'high';
+  finalCtx.drawImage(
+    canvas1,
+    0, 0, singleWidth, singleHeight - cropBottom,
+    0, 0, singleWidth, singleHeight - cropBottom
+  );
 
-  ctx.drawImage(photoList[0], 32, 40, 980, 900);
-  ctx.drawImage(photoList[1], 32, 920, 980, 900);
-
-  const frameImage = new Image();
-  frameImage.src = 'assets/Frame 17.png';
-  frameImage.onload = () => {
-    ctx.shadowColor = 'rgba(0, 0, 0, 0.5)'; 
-    ctx.shadowBlur = 50;                  
-    ctx.shadowOffsetX = 0;               
-    ctx.shadowOffsetY = 10;               
-
-    ctx.drawImage(frameImage, 0, 0, finalCanvas.width, finalCanvas.height);
-
-    ctx.shadowColor = 'transparent';
-    ctx.shadowBlur = 0;
-    ctx.shadowOffsetX = 0;
-    ctx.shadowOffsetY = 0;
+  finalCtx.drawImage(
+    canvas2,
+    0, 0, singleWidth - cropRight, singleHeight - cropBottom,
+    singleWidth, 0, singleWidth - cropRight, singleHeight - cropBottom
+  );
 
     showPreviewInPage();
-  };
+  });
+}
+
+function loadImage(src) {
+  return new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.src = src;
+  });
 }
 
 function showPreviewInPage() {
-  const doubleCanvas = document.createElement('canvas');
-  doubleCanvas.width = finalCanvas.width * 2;
-  doubleCanvas.height = finalCanvas.height;
-
-  const ctx = doubleCanvas.getContext('2d');
-  ctx.imageSmoothingEnabled = true;
-  ctx.imageSmoothingQuality = 'high';
-
-  const marginLeft = 20;
-  ctx.drawImage(finalCanvas, marginLeft, 0);
-  ctx.drawImage(finalCanvas, marginLeft + finalCanvas.width + 0, 0);
-
-
-  const imageData = doubleCanvas.toDataURL('image/png');
+  const imageData = finalCanvas.toDataURL('image/png');
   const previewSection = document.getElementById('previewSection');
   const previewImageContainer = document.getElementById('previewImageContainer');
   const now = new Date();
   const timestamp = now.toISOString().replace(/T/, '_').replace(/:/g, '-').split('.')[0];
   const filename = `Sweet Happiness Pizzaland_${timestamp}.png`;
-  const downloadButton = document.getElementById('downloadButton');
-  const downloadContainer = document.getElementById('downloadContainer');
 
-  previewImageContainer.innerHTML = `<img src="${imageData}" alt="Hasil Foto" style="max-width: 100%; border-radius: 0px;" />`;
-
+  previewImageContainer.innerHTML = `<img src="${imageData}" alt="Hasil Foto" style="max-width: 100%; border-radius: 0px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);"/>`;
   downloadButton.href = imageData;
   downloadButton.download = filename;
 
   previewSection.style.display = 'flex';
-  downloadContainer.style.display = 'flex';
-
-      if (stickyLogo) {
-    stickyLogo.style.display = 'none';
-  }
+  document.getElementById('downloadContainer').style.display = 'flex';
 }
 
 backButton.addEventListener('click', () => {
@@ -135,11 +142,10 @@ backButton.addEventListener('click', () => {
   document.getElementById('camera').style.display = 'block';
   document.getElementById('snap').style.display = 'inline-block';
 
-  document.getElementById('previewContainer').innerHTML = '';
-
+  previewContainer.innerHTML = '';
   photoList.length = 0;
 
-      if (stickyLogo) {
+  if (stickyLogo) {
     stickyLogo.style.display = 'block';
   }
 });
@@ -162,6 +168,23 @@ function startCountdownAndCapture() {
   }, 1000);
 }
 
+function showToast(message) {
+  const toast = document.createElement('div');
+  toast.textContent = message;
+  toast.style.position = 'fixed';
+  toast.style.bottom = '80px';
+  toast.style.left = '50%';
+  toast.style.transform = 'translateX(-50%)';
+  toast.style.color = 'white';
+  toast.style.padding = '25px 10px';
+  toast.style.borderRadius = '5px';
+  toast.style.zIndex = 9999;
+  toast.style.fontSize = '1rem';
+  toast.style.fontFamily = 'Arial';
+  document.body.appendChild(toast);
+  setTimeout(() => {
+    document.body.removeChild(toast);
+  }, 2000);
+}
 
 snapButton.addEventListener('click', startCountdownAndCapture);
-downloadButton.addEventListener('click', downloadButton);
