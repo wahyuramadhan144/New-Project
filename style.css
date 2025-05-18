@@ -100,16 +100,19 @@ img {
   border-radius: 12px;
 }
 
-.smallOverlayImage {
-  width: 80px;
-  margin-top: 20px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+.nayrakuen {
+  margin-top: 80px;
+  display: flex;
+  justify-content: center;
+}
+
+.nayrakuen img {
+  width: 70px;
+  opacity: 0.9;
   pointer-events: none;
   user-select: none;
-  opacity: 0.9;
 }
+
 
 .preview-title img {
   max-width: 240px;
@@ -166,9 +169,8 @@ img {
 }
 
 
-@media screen and (max-width: 768px) {
-  #figma-frame {
-    width: 90%;
-    height: 300px;
+@media screen and (min-width: 768px) {
+  .preview-section {
+    padding-bottom: 120px;
   }
 }
