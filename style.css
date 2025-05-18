@@ -40,7 +40,7 @@ h1 img {
   position: relative;
   width: 100%;
   max-width: 300px;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 1 / 1;
   border: 5px solid yellow;
   overflow: hidden;
   border-radius: 12px;
@@ -100,6 +100,17 @@ img {
   border-radius: 12px;
 }
 
+.smallOverlayImage {
+  width: 80px;
+  margin-top: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.9;
+}
+
 .preview-title img {
   max-width: 240px;
   height: auto;
@@ -118,16 +129,15 @@ img {
 }
 
 .download-container {
-  position: absolute;
-  top: 70%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 999;
-  display: flex;  
-  flex-direction: row; 
-  gap: 1rem;           
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
   align-items: center;
   justify-content: center;
+
+  margin-top: 20px;
+  z-index: 999;
+  position: relative;
 }
 
 .download-button {
