@@ -100,8 +100,10 @@ function showPreviewInPage() {
   ctx.imageSmoothingEnabled = true;
   ctx.imageSmoothingQuality = 'high';
 
-  ctx.drawImage(finalCanvas, 0, 0); 
-  ctx.drawImage(finalCanvas, finalCanvas.width, 0);
+  const marginLeft = 18;
+  ctx.drawImage(finalCanvas, marginLeft, 0);
+  ctx.drawImage(finalCanvas, marginLeft + finalCanvas.width + 5, 0);
+
 
   const imageData = doubleCanvas.toDataURL('image/png');
   const previewSection = document.getElementById('previewSection');
@@ -112,7 +114,7 @@ function showPreviewInPage() {
   const downloadButton = document.getElementById('downloadButton');
   const downloadContainer = document.getElementById('downloadContainer');
 
-  previewImageContainer.innerHTML = `<img src="${imageData}" alt="Hasil Foto" style="max-width: 100%; border-radius: 8px;" />`;
+  previewImageContainer.innerHTML = `<img src="${imageData}" alt="Hasil Foto" style="max-width: 100%; border-radius: 0px;" />`;
 
   downloadButton.href = imageData;
   downloadButton.download = filename;
