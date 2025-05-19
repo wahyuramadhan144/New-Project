@@ -132,12 +132,14 @@ function showPreviewInPage() {
 
   previewSection.style.display = 'flex';
   document.getElementById('downloadContainer').style.display = 'flex';
+  document.getElementById('notificationContainer').style.display = 'none';
 }
 
 backButton.addEventListener('click', () => {
   document.getElementById('previewSection').style.display = 'none';
   document.getElementById('downloadContainer').style.display = 'none';
-
+  document.getElementById('notificationContainer').style.display = 'block';
+  document.getElementById('notificationContainer').textContent = '';
   document.getElementById('figma-frame').style.display = 'block';
   document.getElementById('camera').style.display = 'block';
   document.getElementById('snap').style.display = 'inline-block';
@@ -168,14 +170,20 @@ function startCountdownAndCapture() {
   }, 1000);
 }
 
+let toastTimeout;
+
 function showToast(message) {
   const notif = document.getElementById('notificationContainer');
-  notif.textContent = message;
-  notif.style.opacity = '1';
+  if (!notif) return;
 
-  clearTimeout(showToast.timeoutId);
-  showToast.timeoutId = setTimeout(() => {
-    notif.style.opacity = '0';
+  clearTimeout(toastTimeout);
+
+  notif.textContent = message;
+  notif.style.display = 'block';
+
+  toastTimeout = setTimeout(() => {
+    notif.style.display = 'none';
+    notif.textContent = '';
   }, 2000);
 }
 
