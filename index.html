@@ -3,38 +3,52 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nayrakuen Photobooth</title>
+  <title>Pizza Photobooth</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-  <div class="content">
-    <h1 class="title">
-      <img src="assets/Say Cheeze.png" alt="Logo" />
-    </h1>
+    <div class="content">
+      <h1 class="title">
+        <img src="assets/Say Cheeze.png" alt="Logo" />
+      </h1>
 
-    <div id="figma-frame">
-      <video id="camera" autoplay playsinline></video>
+      <div id="figma-frame">
+        <video id="camera" autoplay playsinline></video>
+      </div>
+
+      <div id="buttonNotificationWrapper" style="display: flex; flex-direction: column; align-items: center; width: 270px; margin: 0 auto;">
+        <button id="snap" class="normal-button"></button>
+        <div id="notificationContainer" style="
+          margin-top: 8px;
+          font-size: 0.9rem;
+          color: white;
+          text-align: center;
+          min-height: 1.2em;
+          white-space: nowrap;
+          max-width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        "></div>
+      </div>
+
+      <canvas id="canvas" width="480" height="640" style="display:none;"></canvas>
+      <div id="previewContainer"></div>
+      <div id="countdown"></div>
     </div>
 
-    <button id="snap" class="normal-button"></button>
+    <div id="previewSection" class="preview-section" style="display: none;">
+      <div id="previewImageContainer" class="preview-image"></div>
+
+      <div id="downloadContainer" class="download-container" style="display: none;">
+        <a id="downloadButton" class="download-button" href="#" download="Sweet Happiness Pizzaland.png">Download</a>
+        <button id="backButton" class="back-button">Kembali</button>
+      </div>
+    </div>
+
+    <img class="sticky-logo" src="assets/sticker.png" alt="Logo Kecil" />
   </div>
 
-  <canvas id="canvas" width="480" height="640" style="display:none;"></canvas>
-  <div id="previewContainer"></div>
-  <div id="countdown"></div>
-</div>
-
-<div id="previewSection" class="preview-section" style="display: none;">
-  <div id="previewImageContainer" class="preview-image"></div>
-
-  <div id="downloadContainer" class="download-container" style="display: none;">
-    <a id="downloadButton" class="download-button" href="#" download="Sweet Happiness Pizzaland.png">Download</a>
-    <button id="backButton" class="back-button">Ambil ulang</button>
-  </div>
-</div>
-
-  <img class="sticky-logo" src="assets/sticker.png" alt="Logo Kecil" />
   <script src="script.js"></script>
 </body>
 </html>
