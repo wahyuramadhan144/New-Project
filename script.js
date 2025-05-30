@@ -7,15 +7,14 @@ const context = canvas.getContext('2d');
 const backButton = document.getElementById('backButton');
 const stickyLogo = document.querySelector('.sticky-logo');
 
-window.onload = function () {
-  if (!localStorage.getItem("popupShown")) {
-    document.getElementById("eventPopup").classList.remove("hidden");
-    localStorage.setItem("popupShown", "true");
-  }
-};
+window.addEventListener("DOMContentLoaded", () => {
+  const popup = document.getElementById("popup");
+  popup.classList.remove("hidden");
+});
 
 function closePopup() {
-  document.getElementById("eventPopup").classList.add("hidden");
+  const popup = document.getElementById("popup");
+  popup.classList.add("hidden");
 }
 
 const photoList = [];
