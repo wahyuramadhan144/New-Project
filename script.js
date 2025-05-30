@@ -17,6 +17,17 @@ function closePopup() {
   popup.classList.add("hidden");
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+  const popup = document.getElementById("popup");
+  const lanjutButton = document.getElementById("lanjut-btn");
+
+  if (lanjutButton && popup) {
+    lanjutButton.addEventListener("click", function () {
+      popup.classList.add("hidden");
+    });
+  }
+});
+
 const photoList = [];
 let finalCanvas;
 
