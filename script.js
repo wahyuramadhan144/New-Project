@@ -7,6 +7,17 @@ const context = canvas.getContext('2d');
 const backButton = document.getElementById('backButton');
 const stickyLogo = document.querySelector('.sticky-logo');
 
+window.onload = function () {
+  if (!localStorage.getItem("popupShown")) {
+    document.getElementById("popup").classList.remove("hidden");
+    localStorage.setItem("popupShown", "true");
+  }
+};
+
+function closePopup() {
+  document.getElementById("popup").classList.add("hidden");
+}
+
 const photoList = [];
 let finalCanvas;
 
