@@ -7,16 +7,6 @@ const context = canvas.getContext('2d');
 const backButton = document.getElementById('backButton');
 const stickyLogo = document.querySelector('.sticky-logo');
 
-window.addEventListener("DOMContentLoaded", () => {
-  const popup = document.getElementById("popup");
-  popup.classList.remove("hidden");
-});
-
-function closePopup() {
-  const popup = document.getElementById("popup");
-  popup.classList.add("hidden");
-}
-
 document.addEventListener("DOMContentLoaded", function () {
   const popup = document.getElementById("popup");
   const lanjutButton = document.getElementById("lanjut-btn");
