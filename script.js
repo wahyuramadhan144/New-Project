@@ -9,13 +9,13 @@ const stickyLogo = document.querySelector('.sticky-logo');
 
 window.onload = function () {
   if (!localStorage.getItem("popupShown")) {
-    document.getElementById("popup").classList.remove("hidden");
+    document.getElementById("eventPopup").classList.remove("hidden");
     localStorage.setItem("popupShown", "true");
   }
 };
 
 function closePopup() {
-  document.getElementById("popup").classList.add("hidden");
+  document.getElementById("eventPopup").classList.add("hidden");
 }
 
 const photoList = [];
